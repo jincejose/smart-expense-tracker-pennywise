@@ -1,0 +1,41 @@
+databases:
+  - name: pennywise-db
+    databaseName: pennywise
+    user: pennywise
+    plan: free
+    region: oregon
+
+services:
+  - type: web
+    name: pennywise
+    runtime: docker
+    plan: free
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    envVars:
+      - key: DB_HOST
+        fromDatabase:
+          name: pennywise-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: pennywise-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: pennywise-db
+          property: database
+      - key: DATABASE_USERNAME
+        fromDatabase:
+          name: pennywise-db
+          property: user
+      - key: DATABASE_PASSWORD
+        fromDatabase:
+          name: pennywise-db
+          property: password
+      - key: APP_USERNAME
+        value: admin
+      - key: APP_PASSWORD
+        generateValue: true

@@ -1,0 +1,11 @@
+.git
+.idea
+.mvn/wrapper/maven-wrapper.jar
+classpath.txt
+data
+deps
+dist
+node_modules
+target
+.env
+.env.*

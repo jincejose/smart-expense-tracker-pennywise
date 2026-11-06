@@ -4,7 +4,7 @@
 <body class="login-page">
   <main class="login-card">
     <a class="brand login-brand" th:href="@{/login}" aria-label="PennYwise"><span class="brand-mark">PYw</span><span class="brand-name">Penn<span>Y</span>wise<small>PERSONAL FINANCE</small></span></a>
-    <div class="login-intro"><span class="login-eyebrow">YOUR MONEY, IN FOCUS</span><h1>Welcome back</h1><p>Sign in to pick up where you left off.</p></div>
+    <div class="login-intro"><span class="login-eyebrow">YOUR MONEY, IN FOCUS</span><h1>Welcome back</h1><p>Track daily expenses, stay on budget, and see where your money goes.</p></div>
     <div class="login-message login-error" th:if="${param.error}">That username or password didn’t match. Try again.</div>
     <div class="login-message login-success" th:if="${param.logout}">You’re signed out.</div>
     <div class="login-message login-success" th:if="${param.created}">Account created. Sign in with your new username and password.</div>

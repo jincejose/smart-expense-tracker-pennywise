@@ -24,6 +24,31 @@ The simple sign-in page protects the tracker and API. Development defaults are u
 
 If Maven is already installed, `mvn spring-boot:run` and `mvn test` work too.
 
+## Deploy on Vercel
+
+The app is configured for Vercel's Docker container runtime with `Dockerfile.vercel`. Vercel containers are stateless, so connect a PostgreSQL database (for example, through a Vercel Marketplace provider) before deploying.
+
+1. Create or select a Vercel project for this repository.
+2. Add these Production environment variables in the project settings:
+   - `DATABASE_URL`: JDBC URL such as `jdbc:postgresql://<host>:5432/<database>?sslmode=require`
+   - `DATABASE_USERNAME`: database username
+   - `DATABASE_PASSWORD`: database password
+   - `APP_USERNAME`: `admin` (or another initial username)
+   - `APP_PASSWORD`: a strong generated password
+3. Deploy with `vercel --prod` from the repository root. Vercel builds the Java app from `Dockerfile.vercel`; Spring Boot listens on Vercel's `PORT` environment variable.
+
+Do not use local H2 or container files for production data because Vercel may replace container instances.
+
+## Deploy on Render
+
+The app also runs as a Spring Boot web service on Render. The repository includes a Dockerfile and `render.yaml` Blueprint for Render.
+
+1. In Render, choose **New + → Blueprint** and connect `jincejose/smart-expense-tracker-pennywise`.
+2. Select the `master` branch and approve the `render.yaml` Blueprint. It creates the web service and PostgreSQL database in Oregon.
+3. After the first deploy, open the `pennywise` service and check **Environment** for the generated `APP_PASSWORD`. Sign in with username `admin`.
+
+The Blueprint uses Render's free plans. Free web services can sleep when idle, and free PostgreSQL databases are temporary and have limited storage; use a paid database plan for expense data you need to keep long term.
+
 ## PostgreSQL connection
 
 The default connection matches `compose.yaml`:
