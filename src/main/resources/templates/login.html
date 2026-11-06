@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Sign in')}"></head>
+<body class="login-page">
+  <main class="login-card">
+    <a class="brand login-brand" th:href="@{/login}" aria-label="PennYwise"><span class="brand-mark">PYw</span><span class="brand-name">Penn<span>Y</span>wise<small>PERSONAL FINANCE</small></span></a>
+    <div class="login-intro"><span class="login-eyebrow">YOUR MONEY, IN FOCUS</span><h1>Welcome back</h1><p>Sign in to pick up where you left off.</p></div>
+    <div class="login-message login-error" th:if="${param.error}">That username or password didn’t match. Try again.</div>
+    <div class="login-message login-success" th:if="${param.logout}">You’re signed out.</div>
+    <div class="login-message login-success" th:if="${param.created}">Account created. Sign in with your new username and password.</div>
+    <form class="login-form" th:action="@{/login}" method="post">
+      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+      <label>Username<input name="username" autocomplete="username" required autofocus></label>
+      <label>Password<input name="password" type="password" autocomplete="current-password" required></label>
+      <button class="primary-button login-submit" type="submit">Sign in <span>→</span></button>
+    </form>
+    <p class="login-create-account">New to PennYwise? <a th:href="@{/register}">Create an account</a></p>
+    <p class="login-currency">All amounts are tracked in Indian rupees <strong>₹ INR</strong>.</p>
+  </main>
+</body>
+</html>

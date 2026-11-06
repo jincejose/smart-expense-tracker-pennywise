@@ -1,21 +1,75 @@
-# Pennywise — Smart Expense Tracker
+# Pennywise — Java Smart Expense Tracker
 
-A responsive expense tracker built with React, CSS, JavaScript, Express, and PostgreSQL. It includes a ready-to-use local browser storage mode when PostgreSQL is not configured.
+Pennywise is a Java full stack expense tracker built with Spring Boot, Thymeleaf, HTML, CSS, a small amount of browser JavaScript, and PostgreSQL. The same expense and budget features are available as JSON REST APIs for Postman.
 
-## Run locally
+## Run the app
 
-```sh
-npm install
-npm run dev
+Requirements: Java 17 or later, Maven 3.6.3 or later, and Docker Desktop or a local PostgreSQL server.
+
+Start PostgreSQL with Docker Compose:
+
+```powershell
+docker compose up -d postgres
 ```
 
-Open [http://localhost:5173](http://localhost:5173). The app starts with sample transactions saved in the browser. You can add, edit, delete, search, filter, and export expenses; set category budgets; and view monthly reports, budget alerts, and an estimated month end spend. Use the currency selector in the top bar to format amounts as USD, INR, EUR, GBP, JPY, CAD, AUD, or SGD. The currency choice is saved in your browser. It changes the displayed currency and number format, but does not convert amounts using exchange rates.
+Start Pennywise from the project folder:
 
-## Use PostgreSQL
+```powershell
+.\mvnw.cmd spring-boot:run
+```
 
-1. Create an empty PostgreSQL database named `pennywise` (or choose another database name).
-2. Copy `.env.example` to `.env` and update `DATABASE_URL` with your PostgreSQL username, password, host, port, and database.
-3. Initialize the tables with `npm run db:init`.
-4. Start the app with `npm run dev`. The API stores expense and budget changes in PostgreSQL when it connects successfully.
+Open <http://localhost:8080>. On a new database, the app creates the expense and budget tables and adds a small set of sample entries. Database settings can be overridden with `DATABASE_URL`, `DATABASE_USERNAME`, and `DATABASE_PASSWORD`.
 
-The API runs on port 3001 and the Vite dev server proxies `/api` requests to it. `npm run build` builds the React frontend. Set `NODE_ENV=production` and `PORT` to run the production Express server, which serves both the built frontend and the API.
+The simple sign-in page protects the tracker and API. Development defaults are username `admin` and password `pennywise`. Set `APP_USERNAME` and `APP_PASSWORD` before starting the app to change them. Use a strong password before exposing the app beyond your own machine.
+
+If Maven is already installed, `mvn spring-boot:run` and `mvn test` work too.
+
+## PostgreSQL connection
+
+The default connection matches `compose.yaml`:
+
+- Database: `pennywise`
+- Username: `postgres`
+- Password: `postgres`
+- Port: `5432`
+
+For another PostgreSQL server, set environment variables before starting the app:
+
+```powershell
+$env:DATABASE_URL = 'jdbc:postgresql://localhost:5432/pennywise'
+$env:DATABASE_USERNAME = 'postgres'
+$env:DATABASE_PASSWORD = 'your-password'
+```
+
+## Postman
+
+Import [`postman/Pennywise.postman_collection.json`](postman/Pennywise.postman_collection.json) into Postman. It includes health, expense list/create/update/delete, and budget list/save requests. The collection uses `http://localhost:8080` by default, supplies HTTP Basic authentication with the development credentials, and stores the created expense ID for the follow-up update and delete requests.
+
+The API routes are:
+
+- `GET /api/health`
+- `GET /api/expenses?month=2026-11&category=Food%20%26%20dining&search=coffee`
+- `GET`, `POST /api/expenses`
+- `GET`, `PUT`, `DELETE /api/expenses/{id}`
+- `GET`, `PUT /api/budgets`
+
+## Interface features
+
+- Add, edit, search, filter, and delete daily expenses
+- Monthly category budgets with 80% budget alerts
+- Monthly report, six month spending bars, and downloadable CSV
+- Month-end forecast based on the current daily average
+- INR-only amounts and responsive desktop/mobile layouts
+- Sign-in and sign-out for the tracker and authenticated API
+
+All stored expense amounts and budgets are denominated in Indian rupees (INR).
+
+## Quality checks
+
+Run the automated Spring MVC/API integration checks with:
+
+```powershell
+.\mvnw.cmd test
+```
+
+Tests use an isolated in-memory H2 database. The application itself is configured to use PostgreSQL.

@@ -1,0 +1,14 @@
+<aside class="sidebar" th:fragment="sidebar(active)">
+  <a class="brand" th:href="@{/}" aria-label="PennYwise home"><span class="brand-mark">PYw</span><span class="brand-name">Penn<span>Y</span>wise<small>PERSONAL FINANCE</small></span></a>
+  <div class="nav-caption">YOUR SPACE</div>
+  <nav class="side-nav" aria-label="Main navigation">
+    <a aria-label="Overview" title="Overview" th:href="@{/}" th:class="${active == 'overview' ? 'nav-link active' : 'nav-link'}"><span class="nav-icon">⌂</span>Overview</a>
+    <a aria-label="Transactions" title="Transactions" th:href="@{/transactions}" th:class="${active == 'transactions' ? 'nav-link active' : 'nav-link'}"><span class="nav-icon">↗</span>Transactions</a>
+    <a aria-label="Budgets" title="Budgets" th:href="@{/budgets}" th:class="${active == 'budgets' ? 'nav-link active' : 'nav-link'}"><span class="nav-icon">◎</span>Budgets</a>
+    <a aria-label="Reports" title="Reports" th:href="@{/reports}" th:class="${active == 'reports' ? 'nav-link active' : 'nav-link'}"><span class="nav-icon">▤</span>Reports</a>
+  </nav>
+  <div class="sidebar-bottom">
+    <div class="sidebar-note"><span class="note-spark">✳</span><strong>A calmer way to spend</strong><p>Small steps today add up to more choices tomorrow.</p><a th:href="@{/reports}">View your report <span>→</span></a></div>
+    <div class="profile"><span class="profile-avatar">₹</span><span><strong th:text="${currentUser}">admin</strong><small>Personal account · INR</small></span></div>
+  </div>
+</aside>

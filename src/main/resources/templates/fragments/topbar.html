@@ -1,0 +1,12 @@
+<header class="topbar" th:fragment="topbar">
+  <div class="crumbs">My workspace <span>/</span> <strong th:text="${page == 'overview' ? 'Overview' : page == 'transactions' ? 'Transactions' : page == 'budgets' ? 'Budgets' : 'Reports'}">Overview</strong></div>
+  <div class="top-actions">
+    <span class="account-chip"><span>Signed in as</span><strong th:text="${currentUser}">admin</strong></span>
+    <span class="currency-badge" aria-label="Currency: Indian rupee">₹ <strong>INR</strong></span>
+    <a class="primary-button top-add" th:href="@{/expenses/new}"><span>＋</span> Add expense</a>
+    <form class="logout-form" th:action="@{/logout}" method="post">
+      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+      <button class="logout-button" type="submit">Log out</button>
+    </form>
+  </div>
+</header>
