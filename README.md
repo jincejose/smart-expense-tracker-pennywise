@@ -17,6 +17,7 @@ Start Pennywise from the project folder:
 ```powershell
 .\mvnw.cmd spring-boot:run
 ```
+Hosted on Render : https://pennywise-rvxa.onrender.com/
 
 Open <http://localhost:8080>. On a new database, the app creates the expense and budget tables and adds a small set of sample entries. Database settings can be overridden with `DATABASE_URL`, `DATABASE_USERNAME`, and `DATABASE_PASSWORD`.
 
