@@ -6,5 +6,4 @@ target/
 data/
 .idea/
 
-.vercel
 .env*

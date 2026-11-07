@@ -1,9 +1,0 @@
-.git
-.vercel
-.env*
-node_modules
-dist
-target
-data
-deps
-classpath.txt
